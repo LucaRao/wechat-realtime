@@ -1,5 +1,7 @@
 ## 这是一个不需要后端服务代码，而服务端使用memfire cloud实现的全栈微信小程序的简易实时聊天室
 
+!['demo'](./chat.gif "demo")
+
 ## 安装依赖
 ```js
 npm i
