@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="main-chat">
+    <view class="msg-items">
+      <view class="chat-status chat-system-notice-area">
+        <view class="chat-system-notice">系统消息: 欢迎 {{ nickName }} 加入群聊</view>
+      </view>
+      <!-- 每条信息 -->
+      <view class="msg-box" wx:for="{{messages}}" wx:key="{{item.id}}">
+        <view class="chat-item {{item.username == nickName ? 'me':''}}">
+          <view class="clearfix">
+            <view class="avatar">
+              {{ item.username }}
+            </view>
+            <view class="msg-bubble-box">
+              <view class="msg-bubble-area clearfix">
+                <view class="msg-bubble">
+                  <text class="text">{{item.text}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="send-msg-box-wrapper">
+      <view class="send-msg-box">
+        <view class="input-area">
+          <input type="text" class="msg-content" bindinput='addmessage' bindconfirm="send" value="{{inputTxt}}" />
+        </view>
+        <view class="btn-area">
+          <button type="primary" bindtap="send" size="mini" class="send-msg-btn">发送</button>
+        </view>
+      </view>
+    </view>
+
+  </view>
+  
+</view>
+
+
