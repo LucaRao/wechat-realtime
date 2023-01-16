@@ -8,7 +8,6 @@
   justify-content: space-between;
   padding: 0 5px;
   box-sizing: border-box;
-  background-color: #eee;
 }
 
 .main-chat {
@@ -87,6 +86,10 @@
   box-sizing: border-box;
 }
 
+.chat-item .other-bubble{
+  color: rgb(17, 17, 17) !important;
+  background-color: #fff !important;
+}
 .chat-item .msg-bubble {
   display: flex;
   align-items: center;
@@ -123,10 +126,22 @@
 }
 
 .input-area {
-  height: 88rpx;
-  width: 79%;
+  height: 78rpx;
+  width: 65%;
   margin-right: 10px;
   border: 1px #cecdcd solid;
   border-radius: 14rpx;
   border-bottom: 1px solid #eee;
+}
+.send-msg-btn{
+  width: 118rpx !important;
+  height: 75rpx !important;
+  line-height: 75rpx !important;
+  color: #fff;
+  background-color: rgb(56, 173, 255);
+}
+.plus-icon{
+  width: 77rpx;
+  height: 77rpx;
+  margin-right: 20rpx;
 }

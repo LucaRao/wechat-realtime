@@ -13,8 +13,9 @@
             </view>
             <view class="msg-bubble-box">
               <view class="msg-bubble-area clearfix">
-                <view class="msg-bubble">
-                  <text class="text">{{item.text}}</text>
+                <view class="msg-bubble {{item.username == nickName ? '':'other-bubble'}}" style="background:{{item.textType == 'image' ? 'none' : ''}}">
+                  <image bindtap='bindtap_img' data-id="{{item.text}}" wx:if="{{item.textType == 'image'}}" src="{{item.text}}"></image>
+                  <text wx:else class="text">{{item.text}}</text>
                 </view>
               </view>
             </view>
@@ -26,11 +27,14 @@
 
     <view class="send-msg-box-wrapper">
       <view class="send-msg-box">
+      <view bindtap="addimage">
+      <image src="/plus.png" class="plus-icon" alt=""/>
+      </view>
         <view class="input-area">
           <input type="text" class="msg-content" bindinput='addmessage' bindconfirm="send" value="{{inputTxt}}" />
         </view>
         <view class="btn-area">
-          <button type="primary" bindtap="send" size="mini" class="send-msg-btn">发送</button>
+          <button  bindtap="send" size="mini" class="send-msg-btn">发送</button>
         </view>
       </view>
     </view>

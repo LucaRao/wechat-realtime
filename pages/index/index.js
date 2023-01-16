@@ -47,7 +47,6 @@ Page({
   
   },
   async getInitialMessages(){
-    // if (!this.data.messages) {
       const { data, error } = await supabase
         .from("messages")
         .select()
@@ -61,11 +60,17 @@ Page({
         });
         return;
       }
+      data.data.forEach((item)=>{
+        if(item.text.split('.')[5]=='png'||item.text.split('.')[5]=='jpg'){
+          item.textType = 'image'
+        }else{
+          item.textType = 'text'
+        }
+      })
       this.setData({messages:data.data})
       wx.pageScrollTo({
         scrollTop: 1000
     })
-    // }
   },
   randomUsername: function () {
     this.setData({
@@ -87,5 +92,42 @@ Page({
           }
         ).subscribe();
         mySubscription = mySubscriptions
-  }
+  },
+  addimage(){
+    var that = this;
+    wx.chooseMedia({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      async success(res) {
+        const file = res.tempFiles[0]
+        const fileExt = res.tempFiles[0].tempFilePath.split('.').pop()
+        const fileName = `${Math.random()}.${fileExt}`
+        const filePath = `${fileName}`
+        let { error: uploadError } = await supabase.storage
+          .from('images')
+          .upload(filePath, file)
+        if (uploadError) {
+          throw uploadError
+        }
+        const { data } = await supabase.storage
+          .from('images')
+          .download(filePath)
+        console.log(data)
+        const { error } = await supabase.from("messages").insert([
+          {
+            text: data,
+            username:that.data.nickName,
+          },
+        ]);
+        that.setData({inputTxt:''})
+      }
+    })
+  },
+  bindtap_img: function (e) {
+    wx.previewImage({
+      current: e.target.dataset.id,
+      urls: [e.target.dataset.id]
+    })
+  },
 })
