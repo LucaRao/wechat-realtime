@@ -1,4 +1,5 @@
 import { supabase } from '../../lib/supabase'
+import { getRandomName,formatTime } from '../../utils/util'
 var mySubscription
 Page({
   data: {
@@ -6,7 +7,8 @@ Page({
     totalPeoples: [],
     messages:null,
     message:null,
-    inputTxt:''
+    inputTxt:'',
+    bgColor:null
   },
   onLoad: function (options) {
     // debugger
@@ -14,12 +16,13 @@ Page({
       this.randomUsername()
     } else {
       this.setData({
-        nickName: wx.getStorageSync('nickName')
+        nickName: wx.getStorageSync('nickName'),
+        // bgColor: wx.getStorageSync('bgColor')
       })
     }
     this.getMessagesAndSubscribe()
     this.getInitialMessages();
-    
+    console.log(getRandomName())
   },
   onHide: function () {
     // 页面隐藏
@@ -41,6 +44,7 @@ Page({
       {
         text: this.data.message,
         username:this.data.nickName,
+        // bgColor:this.data.bgColor
       },
     ]);
     this.setData({inputTxt:''})
@@ -61,6 +65,7 @@ Page({
         return;
       }
       data.data.forEach((item)=>{
+        item.created_at = formatTime(item.created_at)
         if(item.text.split('.')[5]=='png'||item.text.split('.')[5]=='jpg'){
           item.textType = 'image'
         }else{
@@ -69,14 +74,16 @@ Page({
       })
       this.setData({messages:data.data})
       wx.pageScrollTo({
-        scrollTop: 1000
+        scrollTop: 2000
     })
   },
   randomUsername: function () {
     this.setData({
-      nickName: `@user${Date.now().toString().substr(-4)}`
+      nickName: getRandomName(),
+      // bgColor:`#${Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0")}`
     });
     wx.setStorageSync('nickName', this.data.nickName)
+    // wx.setStorageSync('bgColor', this.data.bgColor)
   },
   getMessagesAndSubscribe() {
       let mySubscriptions = supabase
@@ -118,6 +125,7 @@ Page({
           {
             text: data,
             username:that.data.nickName,
+            // bgColor:that.data.bgColor
           },
         ]);
         that.setData({inputTxt:''})

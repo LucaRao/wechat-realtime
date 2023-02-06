@@ -1,40 +1,48 @@
 <view class="container">
   <view class="main-chat">
-    <view class="msg-items">
+    <view class="msg-items" style="display:flex;flex-direction: column;">
       <view class="chat-status chat-system-notice-area">
         <view class="chat-system-notice">系统消息: 欢迎 {{ nickName }} 加入群聊</view>
       </view>
       <!-- 每条信息 -->
       <view class="msg-box" wx:for="{{messages}}" wx:key="{{item.id}}">
+        
         <view class="chat-item {{item.username == nickName ? 'me':''}}">
+          <image class="{{item.username == nickName ? 'sj':'osj'}}"  src="{{item.username == nickName ? '/me.png':'/other.png'}}" />
           <view class="clearfix">
+            <!-- <view class="avatar">
+              <view class="user-avatar" style="background-color:{{bgColor}}">{{ item.username }}</view>
+            </view> -->
             <view class="avatar">
-              {{ item.username }}
+              @{{ item.username }}
             </view>
             <view class="msg-bubble-box">
               <view class="msg-bubble-area clearfix">
                 <view class="msg-bubble {{item.username == nickName ? '':'other-bubble'}}" style="background:{{item.textType == 'image' ? 'none' : ''}}">
                   <image bindtap='bindtap_img' data-id="{{item.text}}" wx:if="{{item.textType == 'image'}}" src="{{item.text}}"></image>
-                  <text wx:else class="text">{{item.text}}</text>
+                  <view wx:else class="text">{{item.text}}</view>
                 </view>
+               
               </view>
+              <view class="time">{{item.created_at}}</view>
             </view>
           </view>
         </view>
       </view>
-
     </view>
 
     <view class="send-msg-box-wrapper">
       <view class="send-msg-box">
-      <view bindtap="addimage">
+      <!-- <view bindtap="addimage">
       <image src="/plus.png" class="plus-icon" alt=""/>
-      </view>
+      </view> -->
         <view class="input-area">
           <input type="text" class="msg-content" bindinput='addmessage' bindconfirm="send" value="{{inputTxt}}" />
         </view>
         <view class="btn-area">
-          <button  bindtap="send" size="mini" class="send-msg-btn">发送</button>
+          <image src="/send.png" bindtap="send" class="plus-icon" alt=""/>
+          <image src="/img.png" bindtap="addimage" class="plus-icon" alt=""/>
+          <!-- <button  bindtap="send" size="mini" class="send-msg-btn">发送</button> -->
         </view>
       </view>
     </view>

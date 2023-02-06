@@ -5,8 +5,8 @@
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "聊天室",
+    "navigationBarBackgroundColor": "#EDF3FA",
+    "navigationBarTitleText": "一亩三分地",
     "navigationBarTextStyle":"black"
   },
   "style": "v2",

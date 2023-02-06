@@ -10,7 +10,7 @@ text,
   line-height: 1;
 }
 page{
-  background-color: #eee
+  background-color: #fff
 }
 
 
